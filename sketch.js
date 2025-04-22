@@ -1,7 +1,7 @@
 let particles = [];
 let collisionPulseLength = 50;
 let collisionPulseOpacity = 30;
-let circleDragRate = 1;
+let circleDragRate = 0.985;
 let collisionEnergyTransfer = 0; //!!!!
 let initialSpeed = [2,10];
 let circleSizeRange = [10,30]
