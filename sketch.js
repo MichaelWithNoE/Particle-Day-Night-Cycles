@@ -3,12 +3,13 @@ let collisionPulseLength = 50;
 let collisionPulseOpacity = 30;
 let circleDragRate = 0.985;
 let collisionEnergyTransfer = 0; //!!!!
-let initialSpeed = [2,10];
+let initialSpeed = [0,0];
 let circleSizeRange = [10,30]
 let particleCount = 400;
 
 let sliders = [];
 let videoSpeed = 1;
+let backgroundDrag = false;
 
 videoSpeed = 1;
 function setup() {
@@ -31,8 +32,13 @@ function setup() {
   
 }
 
+function mousePressed(){
+  backgroundDrag = !backgroundDrag;
+}
 function draw() {
-  background(0, 20);
+  
+  if (backgroundDrag == true){ background (0,15);}
+  else( background(0));
 
   
   // Update particles
@@ -51,7 +57,7 @@ function draw() {
 
   tint(255, 100);
   image(video, windowWidth/2,windowHeight/2, videoWidth/2,videoHeight/2, 10);
-  video.speed(totalVelocity/1000);
+  video.speed(totalVelocity/1000 + 0.1);
 
   background(map(totalVelocity,particleCount,10*particleCount,0,200),0,0,0);
 
@@ -111,20 +117,24 @@ function draw() {
   }
 
   push()
-  fill('white')
+  fill(255,255,255,30)
   textSize(20)
-  text("total velocity: " + totalVelocity.toFixed(2).toString(),50,50,10000)
+  text("‌Move mouse to advance time  \n‌ Click to toggle drag (laggy), refresh page to reset  \n‌Time Open: "+ int(millis() / 1000) + "s  \n‌ total velocity: " + totalVelocity.toFixed(0), 30,30,10000)
   pop()
+  
+  
 
   //eateSlider(x,y,minValue,maxValue,startValue,stepSize,sliderSize,text)
   //circledragrate
 
 }
 
+
 class Particle {
   constructor(x, y) {
     this.pos = createVector(x, y);
-    this.vel = p5.Vector.random2D().mult(random(initialSpeed[0],initialSpeed[1])); // faster start
+    this.vel = p5.Vector.random2D().mult(random(initialSpeed[0],initialSpeed[1])); 
+    
     this.acc = createVector(0, 0);
     this.size = random(circleSizeRange[0],circleSizeRange[1])**3/500;
     this.pulseLength = 0;
